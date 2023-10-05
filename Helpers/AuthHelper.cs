@@ -22,15 +22,14 @@ namespace API.Helpers {
         
 
         public byte[] GetHashedPassword(string password , byte[] salt) {
-        // SALT SHOULD BE CONVERTED 
-        string saltAndStr = _config.GetSection("AppSettings:PasswordKey").Value + Convert.ToBase64String(salt);
-        return KeyDerivation.Pbkdf2(
-            password ,
-            Encoding.ASCII.GetBytes(saltAndStr) ,
-            KeyDerivationPrf.HMACSHA256 ,
-            1000000,
-            256/8
-        );
+            string saltAndStr = _config.GetSection("AppSettings:PasswordKey").Value + Convert.ToBase64String(salt);
+            return KeyDerivation.Pbkdf2(
+                password ,
+                Encoding.ASCII.GetBytes(saltAndStr) ,
+                KeyDerivationPrf.HMACSHA256 ,
+                1000000,
+                256/8
+            );
 
         }
         public string CreateToken(int UserId) {
@@ -55,43 +54,43 @@ namespace API.Helpers {
         }
         public bool SetPassword(UserLoginDTO UserLoginInfo , string type = "register") {
             byte[] passwordSalt = new byte[128 / 8];
-                using (RandomNumberGenerator rng = RandomNumberGenerator.Create()) {
-                    rng.GetNonZeroBytes(passwordSalt);
-                }
-                byte[] passwordHashed = GetHashedPassword(UserLoginInfo.Password , passwordSalt);
-                string sqlAddAuth = "";
-                if (type == "update") {
-                    sqlAddAuth = @$"EXEC UserData.spAuth_UpadtePass
-                                        @Email = @EmailParam, 
-                                        @PasswordHash = @PasswordHashParam, 
-                                        @PasswordSalt = @PasswordSaltParam";
-                } else { 
-                    sqlAddAuth = @$"EXEC UserData.spAuth_Upsert 
-                                        @Email = @EmailParam, 
-                                        @PasswordHash = @PasswordHashParam, 
-                                        @PasswordSalt = @PasswordSaltParam";
-                }
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create()) {
+                rng.GetNonZeroBytes(passwordSalt);
+            }
+            byte[] passwordHashed = GetHashedPassword(UserLoginInfo.Password , passwordSalt);
+            string sqlAddAuth = "";
+            if (type == "update") {
+                sqlAddAuth = @$"EXEC UserData.spAuth_UpadtePass
+                                    @Email = @EmailParam, 
+                                    @PasswordHash = @PasswordHashParam, 
+                                    @PasswordSalt = @PasswordSaltParam";
+            } else { 
+                sqlAddAuth = @$"EXEC UserData.spAuth_Upsert 
+                                    @Email = @EmailParam, 
+                                    @PasswordHash = @PasswordHashParam, 
+                                    @PasswordSalt = @PasswordSaltParam";
+            }
 
-                    // List<SqlParameter> sqlParamsList = new List<SqlParameter>();
+            // List<SqlParameter> sqlParamsList = new List<SqlParameter>();
 
-                    // SqlParameter emailParam = new SqlParameter("@EmailParam" , SqlDbType.VarChar);
-                    // emailParam.Value = UserLoginInfo.Email;
-                    
-                    // SqlParameter passParam = new SqlParameter("@PasswordHashParam" , SqlDbType.VarBinary);
-                    // passParam.Value = passwordHashed;
+            // SqlParameter emailParam = new SqlParameter("@EmailParam" , SqlDbType.VarChar);
+            // emailParam.Value = UserLoginInfo.Email;
+            
+            // SqlParameter passParam = new SqlParameter("@PasswordHashParam" , SqlDbType.VarBinary);
+            // passParam.Value = passwordHashed;
 
-                    // SqlParameter saltParam = new SqlParameter("@PasswordSaltParam" , SqlDbType.VarBinary);
-                    // saltParam.Value = passwordSalt;
-                    
-                    // sqlParamsList.Add(emailParam);
-                    // sqlParamsList.Add(passParam);
-                    // sqlParamsList.Add(saltParam);
+            // SqlParameter saltParam = new SqlParameter("@PasswordSaltParam" , SqlDbType.VarBinary);
+            // saltParam.Value = passwordSalt;
+            
+            // sqlParamsList.Add(emailParam);
+            // sqlParamsList.Add(passParam);
+            // sqlParamsList.Add(saltParam);
 
-                    DynamicParameters parameters = new DynamicParameters();
-                    parameters.Add("@EmailParam" , UserLoginInfo.Email , DbType.String);
-                    parameters.Add("@PasswordHashParam" , passwordHashed , DbType.Binary);
-                    parameters.Add("@PasswordSaltParam" , passwordSalt , DbType.Binary);
-                    return _dapper.ExecuteWithParams(sqlAddAuth , parameters);
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@EmailParam" , UserLoginInfo.Email , DbType.String);
+            parameters.Add("@PasswordHashParam" , passwordHashed , DbType.Binary);
+            parameters.Add("@PasswordSaltParam" , passwordSalt , DbType.Binary);
+            return _dapper.ExecuteWithParams(sqlAddAuth , parameters);
         }
     }
 }
