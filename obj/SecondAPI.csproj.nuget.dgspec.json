@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\SecondAPI.csproj": {}
+    "C:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\SecondAPI.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\SecondAPI.csproj": {
+    "C:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\SecondAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\SecondAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\SecondAPI.csproj",
         "projectName": "SecondAPI",
-        "projectPath": "c:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\SecondAPI.csproj",
+        "projectPath": "C:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\SecondAPI.csproj",
         "packagesPath": "C:\\Users\\Latitude 3400\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\obj\\",
+        "outputPath": "C:\\Users\\Latitude 3400\\Desktop\\C-Sharp-Practices\\SecondAPI - Advanced\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Latitude 3400\\AppData\\Roaming\\NuGet\\NuGet.Config"

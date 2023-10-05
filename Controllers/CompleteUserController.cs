@@ -34,7 +34,6 @@ public class CompleteUserController : ControllerBase
         if (paramsString.Length > 1) {
             sql += paramsString.Substring(1);
         }
-        //? Should we change the way false works? User 17 with active = false will return results
         Console.WriteLine(sql);
         return _dapper.LoadDataWithParams<CompleteUserInfo>(sql , parameters);
     }
